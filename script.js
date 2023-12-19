@@ -1,3 +1,6 @@
+let playerScore = 0;
+let computerScore = 0;
+
 let getComputerChoice = () => {
     let options = ['Rock', 'Paper', 'Scissors'];
     let randomNumber = Math.floor(Math.random() * 3);
@@ -18,50 +21,36 @@ let getWinner = (playerSelection, computerSelection) => {
     }
 }
 
-
-let getUserChoice = () => {
-    let userInput = prompt("Please enter Rock, Paper, or Scissors:");
-    
-    if (userInput.trim() === "") {
-        alert("No input detected. Please try again.");
-        return getUserChoice(); 
-    }
-
-    let inputOptions = ['Rock', 'Paper', 'Scissors'];
-    let correctInput = userInput[0].toUpperCase() + userInput.slice(1).toLocaleLowerCase();
-
-
-    if (!inputOptions.includes(correctInput)) {
-        alert("Invalid Input. Try Rock, Paper or Scissors.");
-        return getUserChoice();
-    }
+let getUserChoice = (userInput) => {
+    let correctInput = userInput[0].toUpperCase() + userInput.slice(1).toLowerCase();
     return correctInput;
 }
 
+let game = (userChoice) => {
+    let computerSelection = getComputerChoice();
 
-let game = () => {
-    let playerScore = 0;
-    let computerScore = 0;
+    let result = getWinner(userChoice, computerSelection);
 
-    for (let i = 0; i < 5; i++) {
-        let playerSelection = getUserChoice();
-        let computerSelection = getComputerChoice();
+    console.log(result);
 
-        let result = getWinner(playerSelection, computerSelection);
-        
-        console.log(result);
-
-        if (result.includes("Win")) {
-            playerScore++;
-        } else if (result.includes("Lose")) {
-            computerScore++;
-        }
-
-        if (playerScore === 3 || computerScore === 3) {
-            break;
-        }
+    if (result.includes("Win")) {
+        playerScore++;
+    } else if (result.includes("Lose")) {
+        computerScore++;
     }
 
+    if (playerScore >= 3 || computerScore >= 3) {
+        endGame();
+    }
+}
+
+const buttonClick = (e) => {
+    const choice = e.target.classList[1]; 
+    const userChoice = getUserChoice(choice);
+    game(userChoice);
+}
+
+const endGame = () => {
     if (playerScore > computerScore) {
         console.log("You win the game!");
     } else if (playerScore < computerScore) {
@@ -69,9 +58,13 @@ let game = () => {
     } else {
         console.log("It's a tie");
     }
+
+    playerScore = 0;
+    computerScore = 0;
 }
 
+const playerButtons = document.querySelectorAll(".player");
 
-game();
-
-
+playerButtons.forEach(button => {
+    button.addEventListener("click", buttonClick);
+});
