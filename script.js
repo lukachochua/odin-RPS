@@ -71,8 +71,6 @@ playerButtons.forEach(button => {
 });
 
 const displayScore = document.querySelector('.score'); 
-
 const displayResult = document.querySelector('.result');
-
 const gameplay = document.querySelector('.game');
 
