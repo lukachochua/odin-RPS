@@ -9,7 +9,7 @@ let getComputerChoice = () => {
 
 let getWinner = (playerSelection, computerSelection) => {
     if (computerSelection === playerSelection) {
-        return "It's a tie! Try again";
+        return "It's a tie!";
     } else if (
         (computerSelection === "Rock" && playerSelection === "Paper") ||
         (computerSelection === "Paper" && playerSelection === "Scissors") ||
@@ -31,7 +31,7 @@ let game = (userChoice) => {
 
     let result = getWinner(userChoice, computerSelection);
 
-    console.log(result);
+    gameplay.textContent = result;
 
     if (result.includes("Win")) {
         playerScore++;
@@ -39,7 +39,10 @@ let game = (userChoice) => {
         computerScore++;
     }
 
-    if (playerScore >= 3 || computerScore >= 3) {
+    displayScore.textContent = `${playerScore}-${computerScore}`;
+
+
+    if (playerScore >= 5 || computerScore >= 5) {
         endGame();
     }
 }
@@ -52,12 +55,10 @@ const buttonClick = (e) => {
 
 const endGame = () => {
     if (playerScore > computerScore) {
-        console.log("You win the game!");
+        displayResult.textContent = "Cograts! You win the game!";
     } else if (playerScore < computerScore) {
-        console.log("You lose the game!");
-    } else {
-        console.log("It's a tie");
-    }
+        displayResult.textContent = "Sorry, you lose. Try again!";
+    } 
 
     playerScore = 0;
     computerScore = 0;
@@ -68,3 +69,10 @@ const playerButtons = document.querySelectorAll(".player");
 playerButtons.forEach(button => {
     button.addEventListener("click", buttonClick);
 });
+
+const displayScore = document.querySelector('.score'); 
+
+const displayResult = document.querySelector('.result');
+
+const gameplay = document.querySelector('.game');
+

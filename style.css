@@ -9,4 +9,12 @@
     height: 100vh;
     width: auto;
     align-items: center;
+    flex-direction: column;
+    gap: 20px;
+}
+
+
+.score {
+    text-decoration: underline;
+    font-size: x-large;
 }
